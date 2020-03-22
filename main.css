@@ -1,0 +1,74 @@
+#footer {
+
+    background-image: linear-gradient(to bottom, rgb(218, 214, 214) , rgb(121, 120, 120));
+    color: white;
+}
+
+#footer div {
+
+    padding: 2em;
+}
+
+/* #quotes div {
+    padding: 5em;
+} */
+
+#quotes blockquote {
+    /* padding-top: 5em;
+    padding-bottom: 5em;
+    padding-left: 2em;
+    padding-right: 2em; */
+    padding: 3em;
+    border-bottom: 4px solid rgba(245, 165, 46, 0.438);
+    border-radius: 1em;
+    height: 90%;
+}
+
+#card_row {
+    padding: 2em;
+    
+}
+
+ #cardCol {
+
+    padding-bottom: 2em;
+
+}
+
+#shopcart {
+
+    font-size: 2em;
+    color: orange;
+    padding: 0.5em;
+}
+
+
+#social_icons i{
+
+    font-size: 3em;
+    padding-left: 5px;
+}
+
+#footer a {
+    color: white;
+}
+
+#footer dl {
+    list-style: none;
+}
+
+/* #cardImg {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+} */
+
+#count_row {
+    padding: 1em;
+}
+
+#results_found {
+    border-bottom: 5px solid rgba(255, 183, 49, 0.521)
+}
+
+

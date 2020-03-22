@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="main.css">
+
+  <title>Dunder Mifflin - ADMIN</title>
+</head>
+
+<body onload="getProducts()">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top" id="headernav">
+
+    <!-- Logo -->
+    <a class="navbar-brand" href="#"><img src="img/dm_logo_trans_crop.png" style="width: 10em; margin-left: 0;"></a>
+    <h1>ADMIN SITE</h1>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <!-- Ikon för hamburger-menu -->
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="shop.html">Shop</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            About Us
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#">The Team</a>
+            <a class="dropdown-item" href="#">The Vision</a>
+            <a class="dropdown-item" href="books.html">The Books</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Contact Us</a>
+          </div>
+        </li>
+
+      </ul>
+
+    </div>
+  </nav>
+
+
+
+
+  </nav>
+
+  <div class="container-fluid">
+    <h1>JSON-data / database</h1>
+    <button class="btn btn-primary" href="#" role="button" style="float: right;" data-toggle="modal"
+      data-target="#modal_addProd">Add Product</button>
+
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Name</th>
+          <th scope="col">Description</th>
+          <th scope="col">Price</th>
+          <th scope="col">Img</th>
+          <th scope="col">Category</th>
+
+
+        </tr>
+      </thead>
+      <tbody id="tableBody">
+
+
+      </tbody>
+    </table>
+
+
+
+  </div>
+
+
+
+  <!-- Modal addProduct< -->
+  <div class="modal" tabindex="-1" role="dialog" id="modal_addProd" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Make sure to fill out ALL fields</p>
+          <form id="form_addProduct">
+            <div class="form-group">
+              <label for="newProd_pname">Product name</label>
+              <input type="text" class="form-control" id="newProd_pname" placeholder="E.g. Coffee Mug">
+
+
+            </div>
+            <div class="form-group">
+              <label for="newProd_desc">Product description</label>
+              <input type="text" class="form-control" id="newProd_desc" placeholder="E.g. Stylish black mug">
+
+            </div>
+            <div class="form-group">
+              <label for="newProd_price">Product price ($)</label>
+              <input type="number" class="form-control" id="newProd_price" onchange="setTwoNumberDecimal(this)"
+                step="0.01" placeholder="E.g. 5.99">
+            </div>
+            <div class="form-group">
+              <label for="newProd_img">Product image</label>
+              <input type="text" class="form-control" id="newProd_img" placeholder="E.g. picture.jpg">
+              <small>Currently, only locally stored files (in img-folder) are supported</small>
+            </div>
+            <div class="form-group">
+              <label for="newProd_category">Product category</label>
+              <input type="text" class="form-control" id="newProd_category" placeholder="E.g. paper/swag/misc">
+            </div>
+
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary" data-dismiss="modal" onclick="addProduct()">Add Product</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal UPDATE/DELETE -->
+
+  <div class="modal" tabindex="-1" role="dialog" id="modal_UpDel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Update/Delete</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Product in table to update or delete:</p>
+          <form id="form_UpDel">
+            <div class="form-group">
+              <label for="newProd_pname">Product ID</label>
+              <input type="text" class="form-control" id="prod_ID" placeholder="#" readonly>
+
+
+            </div>
+            <div class="form-group">
+              <label for="newProd_pname">Product name</label>
+              <input type="text" class="form-control" id="prod_pname" placeholder="E.g. Coffee Mug">
+
+
+            </div>
+            <div class="form-group">
+              <label for="newProd_desc">Product description</label>
+              <input type="text" class="form-control" id="prod_desc" placeholder="E.g. Stylish black mug">
+            </div>
+            <div class="form-group">
+              <label for="newProd_price">Product price ($)</label>
+              <input type="number" class="form-control" id="prod_price" onchange="setTwoNumberDecimal(this)" step="0.01"
+                placeholder="5.99">
+            </div>
+            <div class="form-group">
+              <label for="newProd_img">Product image</label>
+              <input type="text" class="form-control" id="prod_img" placeholder="picture.jpg">
+            </div>
+            <div class="form-group">
+              <label for="newProd_category">Product category</label>
+              <input type="text" class="form-control" id="prod_category" placeholder="E.g. paper/swag/misc">
+            </div>
+
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="modal_AddClose" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="subtmit" class="btn btn-danger" data-dismiss="modal" id="btnDelete"
+            onclick="deleteProd()">Delete Product</button>
+          <button type="submit" class="btn btn-success" data-dismiss="modal" id="btnUpdate"
+            onclick="updateProd()">Update Product</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Footer -->
+  <div class="container-fluid">
+
+    <div class="row" id="footer">
+      <div class="col">
+
+        <dl>
+          <dt>
+            Dunder Mifflin
+          </dt>
+
+          <dt>
+            Scranton, PA
+          </dt>
+
+          <dt>
+            54116 88
+          </dt>
+
+          <dt>
+            (555) 555-1234
+          </dt>
+        </dl>
+
+      </div>
+      <div class="col">
+        <dl>
+          <dt>
+            <a href="#">About</a>
+          </dt>
+          <dt>
+            <a href="#">Contact</a>
+          </dt>
+          <dt>
+            <a href="#">FAQ</a>
+          </dt>
+          <dt>
+            <a href="#">Career</a>
+          </dt>
+        </dl>
+      </div>
+      <div class="col-sm" id="social_icons">
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-facebook-square"></i></a>
+        <a href="#"><i class="fab fa-twitter-square"></i></a>
+        <a href="#"><i class="fab fa-linkedin"></i></a>
+      </div>
+
+    </div>
+  </div>
+
+
+
+  <!-- External JavaScript -->
+  <script src="JavaScript/admin_database.js"></script>
+  <!-- Optional JavaScript -->
+  <script src="https://kit.fontawesome.com/b1e5eac4bd.js" crossorigin="anonymous"></script>
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
